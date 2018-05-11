@@ -1,0 +1,10 @@
+<network>
+  <name>external</name>
+  <bridge name='virbr11' stp='on' delay='0'/>
+  <domain name='external'/>
+  <ip address='192.168.100.0' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.100.100' end='192.168.100.200'/>
+    </dhcp>
+  </ip>
+</network>

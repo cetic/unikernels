@@ -1,0 +1,41 @@
+Iface outside {
+        address:        192.168.100.254,
+        netmask:        255.255.255.0,
+        index:          0
+}
+
+Iface inside {
+        address:        192.168.101.3,
+        netmask:        255.255.255.248,
+		gateway:		192.168.101.2,
+        index:          1
+}
+
+Gateway routing {
+        forward: firewallChain,
+        outside_route: {
+            net: 192.168.100.0,
+            netmask: 255.255.255.0,
+            iface: outside
+        },
+        firewall_to_router_route: {
+			net: 192.168.101.0,
+			netmask: 255.255.255.248,
+			iface: inside
+        },
+		inside_route: {
+			net: 10.0.0.0,
+			netmask: 255.255.255.0,
+			iface: inside
+		}
+}
+
+Filter::IP firewallChain {
+	Filter::ICMP {
+		if (icmp.type ==  echo-request) {
+			log("Dropped ping from ", ip.saddr, " to ", ip.daddr, "\n")
+			drop
+		}
+	}
+	accept
+}

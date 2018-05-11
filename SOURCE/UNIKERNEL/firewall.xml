@@ -1,0 +1,6 @@
+<network>
+  <name>firewall</name>
+  <bridge name='virbr12' stp='on' delay='0'/>
+  <domain name='firewall'/>
+  <ip address='192.168.101.1' netmask='255.255.255.248'/>
+</network>

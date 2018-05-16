@@ -4,9 +4,9 @@ This section provides the script to launch and reproduce the benchmarks perfrome
 
 ## Preparing the environment
 
-Prior to launching the benchmarks, you must launch the [pre deployment script](https://git.cetic.be/stages/unikernels/blob/feature/stagelongree2018/DEPLOYMENT/pre_deployment_installation.sh) provided in the DEPLOYMENT folder.
+Prior to launching the benchmarks, you must launch the [pre deployment script](https://github.com/cetic/unikernels/blob/master/DEPLOYMENT/pre_deployment_installation.sh) provided in the DEPLOYMENT folder.
 
-Then you must install the benchmarking tools using the [install\_bench\_tools.sh](https://git.cetic.be/stages/unikernels/blob/feature/stagelongree2018/BENCHMARKING/install_bench_tools.sh) script.
+Then you must install the benchmarking tools using the [install\_bench\_tools.sh](https://github.com/cetic/unikernels/blob/master/BENCHMARKING/install_bench_tools.sh) script.
 This script will install the following tools:
 * dnsperf and its dependencies for the DNS benchmark (by Nominum)
 * wrk2 for the web server benchmark (by Gil Tene, based on original wrk by Will Glozer)

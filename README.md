@@ -2,56 +2,56 @@
 
 ## Table of Contents
 
-* [Introduction](https://git.cetic.be/stages/unikernels#introduction)
-* [Theoretical Concepts](https://git.cetic.be/stages/unikernels#theoretical-concepts)
-    * [Unikernel](https://git.cetic.be/stages/unikernels#theoretical-concepts)
-        * [Microkernel](https://git.cetic.be/stages/unikernels#microkernel)
-            * [Monolithic vs Microkernel](https://git.cetic.be/stages/unikernels#monolithic-vs-microkernel)
-        * [Library Operating Systems](https://git.cetic.be/stages/unikernels#library-operating-systems)
-        * [Unikernel](https://git.cetic.be/stages/unikernels#unikernel-1)
-    * [Hypervisors VS Linux Containers VS Unikernel](https://git.cetic.be/stages/unikernels#hypervisors-vs-linux-containers-vs-unikernel)
-    * [Security in Unikernel](https://git.cetic.be/stages/unikernels#security-in-unikernel)
-    * [Immutable Infrastructures](https://git.cetic.be/stages/unikernels#immutable-infrastructures)
-* [State of the Art](https://git.cetic.be/stages/unikernels#state-of-the-art)
-    * [Existing Projects](https://git.cetic.be/stages/unikernels#existing-projects)
-        * [MiniOS](https://git.cetic.be/stages/unikernels#minios)
-        * [ClickOS](https://git.cetic.be/stages/unikernels#clickos)
-        * [HalVM](https://git.cetic.be/stages/unikernels#halvm)
-        * [IncludeOS](https://git.cetic.be/stages/unikernels#includeos)
-        * [MirageOS](https://git.cetic.be/stages/unikernels#mirageos)
-        * [OSv](https://git.cetic.be/stages/unikernels#osv)
-        * [Rumprun](https://git.cetic.be/stages/unikernels#rumprun)
-        * [Unik](https://git.cetic.be/stages/unikernels#unik)
-        * [Clive](https://git.cetic.be/stages/unikernels#clive)
-        * [Drawbridge](https://git.cetic.be/stages/unikernels#drawbridge)
-        * [GUK](https://git.cetic.be/stages/unikernels#guk)
-        * [LING](https://git.cetic.be/stages/unikernels#ling)
-        * [Runtime.js](https://git.cetic.be/stages/unikernels#runtimejs)
-    * [Comparing Solutions](https://git.cetic.be/stages/unikernels#comparing-solutions)
-* [Use Case](https://git.cetic.be/stages/unikernels#use-case)
-* [Proof of Concept](https://git.cetic.be/stages/unikernels#proof-of-concept)
-    * [Choice of Unikernel Solution](https://git.cetic.be/stages/unikernels#choice-of-unikernel-solution)
-    * [Architecture of the Proof of Concept](https://git.cetic.be/stages/unikernels#architecture-of-the-proof-of-concept)
-    * [Creating the Unikernel Proof of Concept](https://git.cetic.be/stages/unikernels#creating-the-unikernel-proof-of-concept)
-        * [IncludeOS build files in more details](https://git.cetic.be/stages/unikernels#includeos-build-files-in-more-details)
-    * [Creating the Container Counterpart](https://git.cetic.be/stages/unikernels#creating-the-container-counterpart)
-    * [Early Comparison](https://git.cetic.be/stages/unikernels#early-comparison)
-        * [Resource Minimization](https://git.cetic.be/stages/unikernels#resource-minimization)
-* [Benchmark & Results](https://git.cetic.be/stages/unikernels#benchmarking-results)
-    * [Benchmark Environment](https://git.cetic.be/stages/unikernels#benchmark-environment)
-    * [Benchmarking Methodology](https://git.cetic.be/stages/unikernels#benchmarking-methodology)
-		* [Benchmarking tools used](https://git.cetic.be/stages/unikernels#benchmarking-tools-used)
-	* [Benchmark Results](https://git.cetic.be/stages/unikernels#benchmark-results)
-	    * [DNS Server](https://git.cetic.be/stages/unikernels#dns-server)
-        * [Web Server](https://git.cetic.be/stages/unikernels#web-server)
-        * [Boot Time](https://git.cetic.be/stages/unikernels#web-server)
-    * [Benchmark Analysis](https://git.cetic.be/stages/unikernels#web-server)
-* [Project's Reproducibility](https://git.cetic.be/stages/unikernels#projects-reproducibility)
-    * [Deployment Scripts](https://git.cetic.be/stages/unikernels#deployment-scripts)
-    * [Benchmarking Scripts](https://git.cetic.be/stages/unikernels#benchmarking-scripts)
-    * [Improvements](https://git.cetic.be/stages/unikernels#improvements)
-* [Conclusion](https://git.cetic.be/stages/unikernels#conclusion)
-* [Bibliography](https://git.cetic.be/stages/unikernels#bibliography)
+* [Introduction]()
+* [Theoretical Concepts]()
+    * [Unikernel]()
+        * [Microkernel]()
+            * [Monolithic vs Microkernel]()
+        * [Library Operating Systems]()
+        * [Unikernel]()
+    * [Hypervisors VS Linux Containers VS Unikernel]()
+    * [Security in Unikernel]()
+    * [Immutable Infrastructures]()
+* [State of the Art]()
+    * [Existing Projects]()
+        * [MiniOS]()
+        * [ClickOS]()
+        * [HalVM]()
+        * [IncludeOS]()
+        * [MirageOS]()
+        * [OSv]()
+        * [Rumprun]()
+        * [Unik]()
+        * [Clive]()
+        * [Drawbridge]()
+        * [GUK]()
+        * [LING]()
+        * [Runtime.js]()
+    * [Comparing Solutions]()
+* [Use Case]()
+* [Proof of Concept]()
+    * [Choice of Unikernel Solution]()
+    * [Architecture of the Proof of Concept]()
+    * [Creating the Unikernel Proof of Concept]()
+        * [IncludeOS build files in more details]()
+    * [Creating the Container Counterpart]()
+    * [Early Comparison]()
+        * [Resource Minimization]()
+* [Benchmark & Results]()
+    * [Benchmark Environment]()
+    * [Benchmarking Methodology]()
+		* [Benchmarking tools used]()
+	* [Benchmark Results]()
+	    * [DNS Server]()
+        * [Web Server]()
+        * [Boot Time]()
+    * [Benchmark Analysis]()
+* [Project's Reproducibility]()
+    * [Deployment Scripts]()
+    * [Benchmarking Scripts]()
+    * [Improvements]()
+* [Conclusion]()
+* [Bibliography]()
 
 ## Introduction
 
@@ -106,7 +106,7 @@ Unikernels are specialized because they comprise of a single application offerin
 
 If we look at an application on a monolithic operating system, as indicated by Figure 1, we can see that for an application to run, two address spaces need to exist. A kernel space containing functions offered by the underlying operating system such as accessing I/O devices, file systems and process management. On top of the kernel space is the user space, containing the application code itself.
 
-![Application stack on a monolithic operating system](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/normal_application_stack.PNG "Application stack on a monolithic operating system. Source: (Pavlicek, 2017)")
+![Application stack on a monolithic operating system](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/normal_application_stack.PNG "Application stack on a monolithic operating system. Source: (Pavlicek, 2017)")
 
 *Figure 1 Application stack on a monolithic operating system. Source: (Pavlicek, 2017)*
 
@@ -114,7 +114,7 @@ The application code in the user space relies on the operating system code in th
 
 Unikernel applications, however, present a very different structure. As indicated by Figure 2, an application running in a unikernel does not present any division in its address space, which holds both the high-level application code and the lower level operating system routines.
 
-![Application stack on a unikernel application](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/unikernel_application_stack.PNG "Application stack on a unikernel application. Source: (Pavlicek, 2017)")
+![Application stack on a unikernel application](hhttps://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/unikernel_application_stack.PNG "Application stack on a unikernel application. Source: (Pavlicek, 2017)")
 
 *Figure 2 Application stack on a unikernel application. Source: (Pavlicek, 2017)*
 
@@ -130,7 +130,7 @@ Containers are another method of virtualization, which differentiates from hyper
 
 As aforementioned, unikernels leverage the abstraction of hypervisors in addition to using library operating systems to only include the required kernel routines alongside the application to present the lightest of all three solutions.
 
-![Comparison between hypervisors, Linux Container (in this case Docker) and unikernel](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/vms-containers-unikernels.PNG "Comparison between hypervisors, Linux Container (in this case Docker) and unikernel")
+![Comparison between hypervisors, Linux Container (in this case Docker) and unikernel](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/vms-containers-unikernels.PNG "Comparison between hypervisors, Linux Container (in this case Docker) and unikernel")
 
 *Figure 3 Comparison between hypervisors, Linux Containers (in this case Docker) and unikernels. Source docker.com, adapted with unikernel version*
 
@@ -158,7 +158,7 @@ Employing a “destroy and provision” approach gives the major advantage of ke
 
 Figure 4 below illustrates the comparison between updating an application in a mutable infrastructure (Windows in our previous example) as opposed to an immutable infrastructure.
 
-![Updating and application in mutable and immutable infrastructures. Source: (Stella, 2016)](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/mutable-vs-immutable-update.PNG "Updating and application in mutable and immutable infrastructures. Source: (Stella, 2016)")
+![Updating and application in mutable and immutable infrastructures. Source: (Stella, 2016)](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/mutable-vs-immutable-update.PNG "Updating and application in mutable and immutable infrastructures. Source: (Stella, 2016)")
  
 *Figure 4 Updating an application in mutable and immutable infrastructures. Source: (Stella, 2016)*
 
@@ -274,7 +274,7 @@ Once both infrastructures have been developed and are stable, a benchmark will b
 
 ## Proof of Concept
 
-As highlighted by the table in [Comparing Solutions](https://git.cetic.be/stages/unikernels#comparing-solutions), numerous options are available depending on the programming language used for an application as well as the desired supporting platforms. Unfortunately, not all platforms are supported for all languages.
+As highlighted by the table in [Comparing Solutions](), numerous options are available depending on the programming language used for an application as well as the desired supporting platforms. Unfortunately, not all platforms are supported for all languages.
 
 ### Choice of Unikernel Solution
 
@@ -298,7 +298,7 @@ As such, we will create multiple unikernel in a topology as follows:
 
 Both the web server and the DNS will be in a DMZ like network, with a router connecting it to the external network and the firewall filtering incoming connections to the router. Figure 5 below represents the logical topology that will be deployed in a hypervisor environment.
 
-![Representation of the Proof of Concept topology](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/PoC%20Topology.png "Representation of the Proof of Concept topology")
+![Representation of the Proof of Concept topology](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/PoC%20Topology.png "Representation of the Proof of Concept topology")
  
 *Figure 5 Representation of the Proof of Concept topology.*
 
@@ -409,7 +409,7 @@ The benchmark environment was composed of two Dell servers with Intel Xeon CPU E
 
 The servers were setup as one server acting as the benchmark client, while the other hosted the services (either the unikernels or the containers depending on the benchmark being executed) as indicated by Figure 6 below.
 
-![Benchmarking environment](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/Benchmark%20environment.PNG "Benchmarking environment")
+![Benchmarking environment](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/Benchmark%20environment.PNG "Benchmarking environment")
  
 *Figure 6 Benchmarking environment*
 
@@ -432,7 +432,7 @@ In the performance aspect the objective is to measure the response time of the D
 
 The performance and resilience benchmarks are combined into a single test where the benchmark server simulates 100 connections, which will perform requests to the service at an increasing frequency. Thus, as the frequency of the requests increase, the benchmark will progressively transition from a performance benchmark to a resilience benchmark.
 
-![Performance and resilience benchmark](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/Benchmark.png "Performance and resilience benchmark")
+![Performance and resilience benchmark](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/Benchmark.png "Performance and resilience benchmark")
  
 *Figure 7 Performance and resilience benchmark*
 
@@ -440,7 +440,7 @@ The boot time aspect is measured for potential orchestration evaluations: in the
 
 The boot time benchmark is performed by launching a defined number of service instances, either unikernels or containers, and shutting down a random instance; simulating either a failure, an attack or an update (due to immutability or unikernels). The time between the startup command and when the service is available is then recorded. The number of instances is increased over time to determine whether the number of instances has an impact on orchestration performances.
 
-![Boot time benchmark in a simulated orchestration environment](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/Benchmark%202.png "Boot time benchmark in a simulated orchestration environment")
+![Boot time benchmark in a simulated orchestration environment](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/Benchmark%202.png "Boot time benchmark in a simulated orchestration environment")
  
 *Figure 8 Boot time benchmark in a simulated orchestration environment*
 
@@ -460,7 +460,7 @@ In the benchmarks performed, the Unikernel applications are considered as the su
 
 To stress the server, an increasing number of requests per seconds are generated and incremented at 5-minute intervals. Starting at 100 queries per seconds, every 5 minutes the frequency is incremented by 100 until the server crashes.
 
-![DNS benchmark results](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/dns_benchmark.PNG "DNS benchmark results")
+![DNS benchmark results](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/dns_benchmark.PNG "DNS benchmark results")
  
 As indicated by the graph, despite being announced as highly performant cloud ready application solutions, the stateless unikernel DNS implementation seems to have difficulties coping with a growing throughput of queries. As for the container, the average latency seems to remain consistent throughout the test.
 
@@ -472,7 +472,7 @@ Over the 900 queries per second mark, the data retrieved showed that the unikern
 
 For the web server test, a similar stress testing was conducted. The methodology is once again to increase the number of requests per second. Starting at 100 requests per second over a 5-minute period, the number of requests is incremented by steps of 100 until the web service stops responding.
 
-![Web benchmark results](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/web_benchmark.PNG "Web benchmark results")
+![Web benchmark results](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/web_benchmark.PNG "Web benchmark results")
  
 As presented above, the average response time does not appear consistent across the different number of query throughputs. Furthermore, around the 2900 queries per second mark, a similar issue to the DNS server was noted, where the web server refused to process requests at a higher throughput.
 
@@ -480,7 +480,7 @@ Concerning the container, unfortunately no data was retrieved due to the service
 
 To counter this issue, and to obtain some data to compare the unikernels to, an Apache container was used. Still based around a lightweight Alpine base, this image is out of the benchmark scope and somewhat biases the benchmark.
 
-![Web benchmark results with Alpine Apache container](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/web_benchmark_apache.PNG "Web benchmark results with Alpine Apache container")
+![Web benchmark results with Alpine Apache container](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/web_benchmark_apache.PNG "Web benchmark results with Alpine Apache container")
  
 Despite the larger image size and the more complex code, the unikernel present a higher and less stable response time as opposed to the container. One exception remains from the 100 to 400 queries per second, where the response time from the Apache server increases linearly. Speculation for this behavior points to caching mechanisms, however the matter was not investigated further.
 
@@ -490,7 +490,7 @@ For the boot time scenario, 10 unikernels/containers are launched as the initial
 
 The following graph represents the average boot time measured for unikernel virtual machines and containers.
 
-![Boot time benchmark results](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/boot_time_benchmark.PNG "Boot time benchmark results")
+![Boot time benchmark results](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/boot_time_benchmark.PNG "Boot time benchmark results")
  
 As indicated by the figure above, containers present a much faster boot time as opposed to unikernels which take almost 10 times longer to boot on average.
 

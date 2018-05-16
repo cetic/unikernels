@@ -22,7 +22,7 @@ This script will deploy the unikernels by taking the following steps:
 
 The networks are created with the following addressing:
 
-![Proof of concept network addressing scheme](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/unikernel_network.PNG "Proof of concept network addressing scheme")
+![Proof of concept network addressing scheme](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/unikernel_network.PNG "Proof of concept network addressing scheme")
 
 | VM          | IP Address      | 
 | ----------- |-----------------|

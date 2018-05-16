@@ -28,19 +28,28 @@
         * [LING](https://git.cetic.be/stages/unikernels#ling)
         * [Runtime.js](https://git.cetic.be/stages/unikernels#runtimejs)
     * [Comparing Solutions](https://git.cetic.be/stages/unikernels#comparing-solutions)
-* [Use Case](https://git.cetic.be/stages/unikernels/#use-case)
+* [Use Case](https://git.cetic.be/stages/unikernels#use-case)
 * [Proof of Concept](https://git.cetic.be/stages/unikernels#proof-of-concept)
     * [Choice of Unikernel Solution](https://git.cetic.be/stages/unikernels#choice-of-unikernel-solution)
     * [Architecture of the Proof of Concept](https://git.cetic.be/stages/unikernels#architecture-of-the-proof-of-concept)
     * [Creating the Unikernel Proof of Concept](https://git.cetic.be/stages/unikernels#creating-the-unikernel-proof-of-concept)
         * [IncludeOS build files in more details](https://git.cetic.be/stages/unikernels#includeos-build-files-in-more-details)
-    * [Creating the Container Analog](https://git.cetic.be/stages/unikernels#creating-the-container-analog)
-* [Benchmark & Results](https://git.cetic.be/stages/unikernels#benchmark-results)
+    * [Creating the Container Counterpart](https://git.cetic.be/stages/unikernels#creating-the-container-counterpart)
+    * [Early Comparison](https://git.cetic.be/stages/unikernels#early-comparison)
+        * [Resource Minimization](https://git.cetic.be/stages/unikernels#resource-minimization)
+* [Benchmark & Results](https://git.cetic.be/stages/unikernels#benchmarking-results)
+    * [Benchmark Environment](https://git.cetic.be/stages/unikernels#benchmark-environment)
     * [Benchmarking Methodology](https://git.cetic.be/stages/unikernels#benchmarking-methodology)
-        * [Porting IncludeOS code to Linux Containers](https://git.cetic.be/stages/unikernels#porting-includeos-code-to-linux-containers)
-		* [Benchmarking tools used](https://git.cetic.be/stages/unikernels/#benchmarking-tools-used)
-	* [Benchmark Results](https://git.cetic.be/stages/unikernels/#benchmark-results)
-* [Project's Reproducibility](https://git.cetic.be/stages/unikernels/#projects-reproducibility)
+		* [Benchmarking tools used](https://git.cetic.be/stages/unikernels#benchmarking-tools-used)
+	* [Benchmark Results](https://git.cetic.be/stages/unikernels#benchmark-results)
+	    * [DNS Server](https://git.cetic.be/stages/unikernels#dns-server)
+        * [Web Server](https://git.cetic.be/stages/unikernels#web-server)
+        * [Boot Time](https://git.cetic.be/stages/unikernels#web-server)
+    * [Benchmark Analysis](https://git.cetic.be/stages/unikernels#web-server)
+* [Project's Reproducibility](https://git.cetic.be/stages/unikernels#projects-reproducibility)
+    * [Deployment Scripts](https://git.cetic.be/stages/unikernels#deployment-scripts)
+    * [Benchmarking Scripts](https://git.cetic.be/stages/unikernels#benchmarking-scripts)
+    * [Improvements](https://git.cetic.be/stages/unikernels#improvements)
 * [Conclusion](https://git.cetic.be/stages/unikernels#conclusion)
 * [Bibliography](https://git.cetic.be/stages/unikernels#bibliography)
 
@@ -319,50 +328,249 @@ The **vm.json** is not required either and is used mainly for QEMU parameters wh
 
 **Service.cpp** contains the entry point to the unikernel application. This file must contain a **void Service::start() {}** method as the starting point of the application. The libraries to use in the C++ code destined for an IncludeOS unikernel should be those provided by the project. While all the code can be contained in a single file, it can be split into different files as well, however it is important to notify cmake which files to include in the CMakeLists.txt file.
 
-### Creating the Container Analog
+### Creating the Container Counterpart
 
-*This section will contain the various choices and the steps taken to create the container version of the proof of concept used for evaluation and comparison of the unikernel solutions.*
+In order the compare unikernels to an established technology with similar scope (i.e.: minimal footprint), containers were retained as the best solution for comparison. The specific technology chosen was Docker containers due to their presence in industrial deployments and the existence of orchestration tools.
+
+Building the container images required two major steps:
+* Porting the C++ code from the unikernels to the containers;
+* Creating the Dockerfiles to create the containers with the ported code.
+
+The possibilities for porting the code differed with varying degrees of complexity:
+* Compiling the IncludeOS C++ code using the IncludeOS libraries in a container for execution.
+    * *This approach would allow keeping the code identical to the original, however most libraries are written for a different kernel and could potentially not function on execution.*
+* Rewriting the code in C++ using standard libraries.
+    * *This method allows to ensure compatibility with the containers, however creates complexity in the need to adapt the code to be as identical as possible to the IncludeOS code.*
+    * *On the other hand, this method more closely resembles a real-life scenario, where a developer would code differently based on the target platform.*
+* Using the IncludeOS Docker image to run the IncludeOS code in container.
+    * *This is the least interesting method of porting because the IncludeOS container executes QEMU inside a container, effectively making it a nested virtualization, which is outside the scope of the benchmark (i.e.: using a comparable baseline).*
+
+The porting option selected was to rewrite the code in C++ using standard libraries, which proved challenging. To maintain the comparison as close as possible, the objective was to maintain the container C++ code as identical as possible to the unikernel code. This was hindered by the discrepancies present between the IncludeOS library implementations and the existing C++ libraries. This required exploring the IncludeOS libraries and code examples to find the required methods and their implementation.
+
+As a result, some portions of the code are remained as identical as possible, while others are adapted as closely as possible to resemble the same processing steps as to not bias any benchmark.
+
+Due to these discrepancies and lack of documentation of the APIs developed by IncludeOS, the time frame allocated for this project did not permit porting the entirety of the infrastructure from unikernels to containers.
+
+Having successfully ported two applications from unikernels to containers, however, the next step was to create the containers to execute the C++ applications. To maintain the same scope as unikernels, which is to make the application as lightweight as possible, the base image for the containers was a crucial decision.
+
+This minimal approach constraint required for the compilation to be performed on a different container than the destination container. This would allow the destination image to remain small without including all the compilation tools and unnecessary libraries.
+
+The smallest Docker base image containers found were Busybox, at 1.15MB, and Alpine, at 4.15MB. Due to compilation requiring installing utilities like g++ and the C++ libraries, and Busybox not providing any package managers by default, Alpine was used for both compilation and execution.
+
+Based on these findings, two containers were created:
+* A container for compiling the C++ code on the same base image as the destination (Alpine in this case)
+    * This container was created with the gcc and g++ compilers pre-installed
+* A container for each service with the binary executable compiled by the compiler container
+
+The compilation process is plainly executed in command line, where the compiler container is run for the compilation process, stopped once finished and then removed. The compilation command is passed directly inline with the Docker command.
+
+Due to portability issues, and the desire to not download the entirety of the C++ libraries, the C++ code was compiled by statically linking the libraries. The application container is then created by copying to binary to the container image. Executing the containers will start the service which will listen for requests on its first active interface.
+
+### Early Comparison
+
+After deploying unikernels in the proof of concept topology and porting some of the unikernel applications to containers, it was possible to examine a few metrics regarding unikernels and how they compare to containers.
+
+The first data available after compiling the unikernels is the image size. As summarized by the table below, unikernel images are very lightweight considering the fact that they contain a small kernel in addition to the application code.
+
+| Unikernel | Image Size |
+| --- | --- |
+| DNS Server | 3,3 MB |
+| Web Server | 3,5 MB |
+| Router | 3,4 MB |
+| Firewall | 3,2 MB |
+
+In contrast, the container table below presents the image size for the Web and DNS servers as they were built using the ported code from unikernels. The Alpine base image size is also included for reference.
+
+| Container | Image Size |
+| --- | --- |
+| Alpine Docker base image | 4,15 MB |
+| DNS Server | 9,82 MB |
+| Web Server | 10,1 MB |
+
+As can be seen by the tables above, even though unikernels include a partial kernel, the container images are almost three times larger than unikernels.
+
+#### Resource Minimization
+
+An additional attempt at determining early metrics was to determine the minimum amount of resources that could be attributed to a unikernel while remaining functional.
+
+In the proof of concept deployment, analysis of the unikernel applications showed that at idle, memory consumption varied between 85 and 90 megabytes of memory. Memory allocation by the hypervisor was reduced to 128MB for each unikernel which implied approximately 66 to 70 percent of RAM utilization at idle.
+
+In contrast, the DNS and Web server containers used only around 680 kilobytes of memory, representing only 0.53 percent of the 128MB allocated to unikernels.
+
+Processor utilization cannot be used for comparison due to limitations of unikernels to a single core. This limitation is mainly imposed by the lack of process management functions in the unikernels limiting the use of multiprocessing. This limitation is voluntary in order to reduce the kernel size. Unikernels are, however, capable of multi-threading applications.
+
+Containers on the other hand do not suffer this limitation and are able to be fully multi-processor capable by default (unless explicitly specified at creation time).
 
 ## Benchmarking & Results
 
+### Benchmark Environment
+
+The benchmark environment was composed of two Dell servers with Intel Xeon CPU E31220L @ 2.20GHz (1 socket per server) and 32GB of RAM.
+
+The servers were setup as one server acting as the benchmark client, while the other hosted the services (either the unikernels or the containers depending on the benchmark being executed) as indicated by Figure 6 below.
+
+![Benchmarking environment](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/Benchmark%20environment.PNG "Benchmarking environment")
+ 
+*Figure 6 Benchmarking environment*
+
+The hypervisors deployed on the server hosting the service applications were:
+* QEMU with KVM as management layer for the unikernels
+* Docker CE for the containers
+
+As for the benchmarking use cases, three were established:
+* Benchmarking the DNS server as a standalone service (i.e.: it is the only service running on the server)
+* Benchmarking the web server as a standalone service
+* Benchmarking the boot times of services in a simulated orchestration environment
+
 ### Benchmarking Methodology
 
-Once our unikernel proof of concept environment is up and running, we shall compare them to their most comparable solutions, Linux Containers. Since both technologies advertise providing services with a reduced footprint, comparing both solution should provide valuable insight into both technologies.
+**Note:** due to time constraints during the project, only a limited number of the unikernel applications were ported to containers, thus only the DNS and Web services are presented in the following benchmarks.
 
-To compare unikernels and containers, the most important aspect is to have a baseline for both applications. It goes without saying that a unikernel, an image with the bare minimum required to run an application, is lighter and faster than a container with an Ubuntu as its base image, thus the importance of a baseline.
+To compare the unikernels and container solutions, a series of benchmarks have been established to evaluate both solutions. The areas that will be evaluated are performance, resilience and boot time. Due to complexity of benchmarking procedures, the security aspect of the unikernel will not be tested. The following paragraphs will more clearly outline the goal of each test.
 
-Our first goal for this baseline is to maintain the code as close to identical possible between the two services. If the unikernel application executes tasks in one way, and the container executes them in another, the benchmark could be potentially flawed.
+In the performance aspect the objective is to measure the response time of the DNS and web services under normal loads. In the resilience test the objective is to measure the response time under conditions of heavy loads, such as simulated denial of service attacks, and see how long the services last until a noticeable degradation in service is present.
 
-Our second goal is to maintain image size to a minimum. As previously stated, benchmarking a unikernel with full-fledged operating system provides little useful data. Therefore, it is important to aim for the same goal on both services by attempting to make the services as small and as light as possible.
+The performance and resilience benchmarks are combined into a single test where the benchmark server simulates 100 connections, which will perform requests to the service at an increasing frequency. Thus, as the frequency of the requests increase, the benchmark will progressively transition from a performance benchmark to a resilience benchmark.
 
-#### Porting IncludeOS code to Linux Containers
+![Performance and resilience benchmark](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/Benchmark.png "Performance and resilience benchmark")
+ 
+*Figure 7 Performance and resilience benchmark*
 
-One of the main difficulties in preparing a baseline for the benchmark is porting the IncludeOS C++ code to a Container equivalent. The main reason being that since the IncludeOS code is written for a custom-built kernel, all the APIs available in IncludeOS are different from the standard Linux C++ APIs. Since unikernels function in a single address space, system calls are not implemented in the same manner in the IncludeOS C++ libraries as they are in the Linux C++ libraries.
+The boot time aspect is measured for potential orchestration evaluations: in the case of a unikernel or container going offline, how long will it take for the application to get back up and running.
 
-Our possibilities for porting the code differs with varying degrees of complexity:
-* Compiling the IncludeOS C++ code using the IncludeOS headers in a container for execution.
-    * *This approach would allow to keep the code identical to the original, however most headers were written for a different kernel and could potentially not function on execution.*
-* Rewriting the code in a C++ using Linux headers for a specific target container’s base image.
-    * *This method allows to ensure compatibility with the container, however creates complexity in the need to adapt the code to be as identical as possible to the IncludeOS code.*
-    * *On the other hand, this method more closely resembles a real-life scenario, where a developer would code differently based on the target platform.*
-* Using the IncludeOS Docker image to run the IncludeOS code in container.
-    * *This is the least interesting method of porting because the IncludeOS container executes QEMU inside the container, effectively making it a nested virtualization, which is outside the scope of the benchmark (i.e.: using a comparable baseline).*
-	
+The boot time benchmark is performed by launching a defined number of service instances, either unikernels or containers, and shutting down a random instance; simulating either a failure, an attack or an update (due to immutability or unikernels). The time between the startup command and when the service is available is then recorded. The number of instances is increased over time to determine whether the number of instances has an impact on orchestration performances.
+
+![Boot time benchmark in a simulated orchestration environment](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/Benchmark%202.png "Boot time benchmark in a simulated orchestration environment")
+ 
+*Figure 8 Boot time benchmark in a simulated orchestration environment*
+
 #### Benchmarking tools used
 
-*This section will define the tools used for benchmarking the various elements we defined in the use case.*
+The chosen utility to benchmark the DNS server is Nominum’s **DNSPerf** tool. This command-line utility is multi-threaded and can be configured to emulate multiple clients and specify the number of queries per second. The test results are presented as a summary of queries sent, completed and lost. Being a command line tool, it can be easily integrated into scripts for automated benchmarking test cases.
+
+For the web server, Gil Tene’s **wrk2** is the retained solution for its configurable parameters similar to DNSPerf: specify the number of requests, the number of clients and the duration of the test. Wrk2 is also multi-threaded and presents results with metrics such as response time, transaction rate and throughput.
+
+To measure the boot times of unikernels and container, a python script will be used to launch and power down unikernel/container instances and measure the time between executing the command and when the service is operational.
 
 ### Benchmark Results
 
-*This section will contain the results of the of the various benchmarks conducted using the tools mentioned in the methodology.*
+In the benchmarks performed, the Unikernel applications are considered as the subject of the benchmark, while the comparator is the Docker applications deployed using the same code used for unikernels but adapted based on API differences in the C++ libraries.
+
+#### DNS Server
+
+To stress the server, an increasing number of requests per seconds are generated and incremented at 5-minute intervals. Starting at 100 queries per seconds, every 5 minutes the frequency is incremented by 100 until the server crashes.
+
+![DNS benchmark results](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/dns_benchmark.PNG "DNS benchmark results")
+ 
+As indicated by the graph, despite being announced as highly performant cloud ready application solutions, the stateless unikernel DNS implementation seems to have difficulties coping with a growing throughput of queries. As for the container, the average latency seems to remain consistent throughout the test.
+
+Note that at the 600 queries per second mark, the latency became too important and was pulled from the graph for readability reasons.
+
+Over the 900 queries per second mark, the data retrieved showed that the unikernel application refused to process requests beyond this throughput. Thus, the remainder of the container statistics have been excluded. As explained later in the analysis, this could be due to a bug in the UDP library implementation of the IncludeOS project.
+
+#### Web Server
+
+For the web server test, a similar stress testing was conducted. The methodology is once again to increase the number of requests per second. Starting at 100 requests per second over a 5-minute period, the number of requests is incremented by steps of 100 until the web service stops responding.
+
+![Web benchmark results](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/web_benchmark.PNG "Web benchmark results")
+ 
+As presented above, the average response time does not appear consistent across the different number of query throughputs. Furthermore, around the 2900 queries per second mark, a similar issue to the DNS server was noted, where the web server refused to process requests at a higher throughput.
+
+Concerning the container, unfortunately no data was retrieved due to the service refusing to respond to the benchmarking tool’s requests. This could be explained by a difference in code: the IncludeOS implementation is much more complex than the container counterpart, due to the vast number of custom libraries aimed at web server management. In contrast, the container required a much more simplistic approach using standard TCP sockets. This same simplistic code could not be ported to IncludeOS because of the lack of simple TCP socket implementation in the IncludeOS libraries.
+
+To counter this issue, and to obtain some data to compare the unikernels to, an Apache container was used. Still based around a lightweight Alpine base, this image is out of the benchmark scope and somewhat biases the benchmark.
+
+![Web benchmark results with Alpine Apache container](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/web_benchmark_apache.PNG "Web benchmark results with Alpine Apache container")
+ 
+Despite the larger image size and the more complex code, the unikernel present a higher and less stable response time as opposed to the container. One exception remains from the 100 to 400 queries per second, where the response time from the Apache server increases linearly. Speculation for this behavior points to caching mechanisms, however the matter was not investigated further.
+
+#### Boot Time
+
+For the boot time scenario, 10 unikernels/containers are launched as the initial run. Over a period of 20 minutes, random instances are shut down, then started up again. A timer records the time between when the startup command has been given and when the instance is reachable through its IP address. By the end of the 20-minute period, an additional 10 instances are launched, and the test is repeated. The incrementation takes place up to 140 instances running simultaneously.
+
+The following graph represents the average boot time measured for unikernel virtual machines and containers.
+
+![Boot time benchmark results](https://git.cetic.be/stages/unikernels/raw/feature/stagelongree2018/MEDIA/boot_time_benchmark.PNG "Boot time benchmark results")
+ 
+As indicated by the figure above, containers present a much faster boot time as opposed to unikernels which take almost 10 times longer to boot on average.
+
+### Benchmark Analysis
+
+Unfortunately, due to unforeseen challenges in the benchmarking process, the performance and resilience tests did not provide sufficient data to derive anything conclusive based on numbers.
+
+However, based on a small data sample present in the DNS server application, within 600 DNS requests per second, the container does present a clear performance advantage over the unikernels. A potential explanation for these results, and the inability for the unikernel to go beyond 900 queries per second, could be an issue within the IncludeOS UDP implementation .
+
+Regarding the web server performance, the unikernel presents a lack of consistency across the different request frequencies. Furthermore, despite being out of the benchmark scope, the Apache container still outperforms the more simplistic and lighter unikernel service.
+
+The boot time benchmark however shows a clear indication that, unlike promoted, unikernels do not present a clear advantage in boot time over containers. A potential explanation is the lack of optimization for our hypervisor environment based on KVM/QEMU. However, this would be relatively inconsistent with IncludeOS’s choice of default hypervisor being QEMU and chosen for its performance potential.
 
 ## Project’s Reproducibility
 
-*This section will detail the steps taken to allow this project to be reproduced by anyone who wishes to test the unikernel system itself. This will include the how the project was rendered reproducible and how it can be reproduced.*
+To allow anyone who wishes to reproduce this project, a series of scripts have been written. Note that the scripts have been written and tested on an Ubuntu 16.04 system. Executing those scripts on another Linux based operating system may require some modifications.
+
+While the initial desire of the project was to provide a Vagrant file for fully contained reproducibility, constraints within the project’s time frame have hindered their creation.
+
+The scripts are divided into two main objectives:
+* **Deployment scripts:** used for deploying the proof of concept environment as well as the container counterparts;
+* **Benchmarking scripts:** used to reproduce the benchmarks executed for this project.
+
+### Deployment Scripts
+
+The deployment scripts are divided into three parts: a pre-deployment, a unikernel deployment and a container deployment script.
+
+The **pre-deployment** script installs all the required packages to deploy either the unikernel or the container deployment. The script clones the IncludeOS repository and installs the project, as well as installing the KVM utilities (QEMU being installed as part of IncludeOS) and the Docker engine.
+
+The **unikernels deployment** script deploys the unikernel proof of concept environment developed for this project. The script builds the unikernel images from the source code, prepares the virtual networks then launches the unikernel instances.
+
+This script does not deploy a client to test the deployment, to do so, a client virtual machine must be started and connected to the external network. The client IP configuration must be the Firewall external IP address as client’s default gateway (192.168.100.254 by default), and the DNS server’s IP address must be set as the client’s name server (10.0.0.100 by default).
+
+The **containers deployment** script does not deploy the same proof of concept environment due to the constraints mentioned previously. However, the script builds and deploys the container images for the web and DNS server, exposing the ports 80 and 53 on the interface with internet connectivity by default.
+
+### Benchmarking Scripts
+
+The benchmarking scripts are varied, as there are scripts to launch the services to benchmark and scripts to launch the benchmark proper in addition to other miscellaneous scripts.
+
+Prior to using any of the benchmarking scripts, it is imperative to use the **pre-deployment** script in order to install the pre-requisites and packages required to build the services to benchmark.
+
+The **benchmark tools installation** script installs the tools used to perform the benchmarks, namely the wrk2 and dnsperf tools.
+
+The **bench_unikernel** and **bench_container** scripts are bash scripts that launch the indicated service for benchmarking. Depending on the technology, the script will build either the unikernel or the container and deploy it to QEMU or Docker respectively. Note that for Docker containers, the ports are exposed via the Docker API, for unikernels however, the ports are redirected to the internal network through iptables rules (not automatically removed after virtual machine shutdown or deletion).
+
+The **bench_unikernel_cleanup** removes the iptables rules created when launching a unikernel service for benchmark.
+
+The **python scripts** launch the indicated benchmarks and are written for Python version 3. The DNS and web benchmark scripts require the destination IP address to be passed as argument, while the startup benchmark script requires the initial number of instances to start with. The results of the benchmarks are inserted into CSV files in the same directory as the scripts.
+
+The DNS and web scripts are not programmed to stop and require manual intervention. The startup script on the other hand will stop after having reached 140 simultaneous instances.
+
+Note that as a precaution for the benchmark, the startup script will shut down all Docker containers and QEMU virtual machines (will have undesired effects on non-development environments).
+
+Lastly, the **cleanup_all** script cleans all the benchmark environment by removing the manual iptables entries and **stopping and deleting** all Docker container instances and QEMU virtual machines. This script should be reserved for a dedicated testing environment, due to the risk of losing existing virtual machines or containers.
+
+### Improvements
+
+The scripts have been mostly written to serve their specific purpose in a specific environment and have not been written with heterogeneity in mind. As such, there is room for improvement.
+
+The best improvement would be to move from a scripted solution to a series of Vagrant files that would deploy an environment with the required tools to reproduce the project.
+
+Another improvement would be to render the script more generic as opposed to Ubuntu-centric, due to the presence of sudo commands. This would however require launching some of the scripts as root, which, aside from being dangerous, could cause unexpected behaviors.
+
+The Python benchmarking scripts could also be improved by using a more complete set of arguments to define the benchmark parameters with more granularity, as well as to detect when the DNS and web server are no longer responsive.
 
 ## Conclusion
 
-*This conclusion will be written once the proof of concept has been deployed and the benchmark has been executed. The conclusion will also discuss problems encountered during deployment and final thoughts on the technology of unikernels.*
+Unikernels are a new technology, but the principles on which they are based date from the early days of the operating system era. Those same principles have been re-used and adapted to new technologies available today to enhance their possibilities. The objective of this project was to explore the technology of unikernels and their possibilities in real-world applications.
+
+Through the implementation of unikernels in an industry-proven topology, this project demonstrated that unikernels have potential to surpass containers on their size-on-disk footprint. With images not larger than 4MB, and resource utilization reduced to a strict minimum of a single core with 128MB of memory, unikernels have proved to be extremely lightweight for hosting an application with its own minimalistic operating system, whether it be a web server, DNS server, a router or a firewall.
+
+However, despite achieving such objectives, unikernels also have their fair share of shortcomings. Notwithstanding some difficulties in the benchmarking process, unikernels seem to present little advantage over containers in terms of performance. While this could be explained by the technology’s newness, which has yet to fully breakthrough, it does prove that the technology still requires some improvement before being industry ready.
+
+Another explanation could be linked to the IncludeOS project itself. Developing applications for unikernels certainly requires a different approach and special considerations, as opposed to developing applications for monolithic operating systems. This is even more true when the framework uses custom libraries lacking in-depth documentation.
+
+Therefore, the belief is that while unikernels are an important innovation in the field of micro-services, the technology has not yet matured enough, nor has it been explored far enough by some projects. This is particularly well represented in the DNS benchmark performed, where the unikernel UDP implementation presented an important anomaly.
+
+While IncludeOS presents a promising future, the lack of in-depth documentation mixed with the discrepancies in their custom API libraries will delay a more widespread adoption by the community.
+
+Other unikernel projects may see the light of day, perhaps with more promising features, such as orchestration tool, or integration with existing orchestration tools. Such an integration would help spreading unikernels in existing infrastructures. However, the number of unikernel projects that spawn but are no longer maintained by either the original developers or the community greatly hinders the ability for unikernels to further evolve.
 
 ## Bibliography
 

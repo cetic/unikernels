@@ -120,24 +120,6 @@ Unikernel applications, however, present a very different structure. As indicate
 
 To create such an application, unikernels use specialized cross-compiling (because by design, the unikernel cannot be compiled on the same system it will run) methods by selecting required low-level functions from library operating system (provided in compilable form) and cross-compiling them with the application code and configuration. The result is an image that can run as standalone to provide a service.
 
-### Hypervisors VS Linux Containers VS Unikernel
-
-Virtualization of services can be implemented in various ways. One of the most widespread methods today is through hypervisors such as VMware’s ESXi or Linux Foundation’s Xen Project.
-
-Hypervisors, amongst other things, allow hosting multiple guest operating systems on a single physical machine. The widespread use of hypervisors is due to their ability to better distribute and optimize the workload on the physical servers as opposed to legacy infrastructures of one operating system per physical server.
-
-Containers are another method of virtualization, which differentiates from hypervisors by creating virtualized environments and sharing the host’s kernel. This provides a lighter approach to hypervisors which requires each guest to have their copy of the operating system kernel, making a hypervisor-virtualized environment resource heavy in contrast to containers which share parts of the existing operating system.
-
-As aforementioned, unikernels leverage the abstraction of hypervisors in addition to using library operating systems to only include the required kernel routines alongside the application to present the lightest of all three solutions.
-
-![Comparison between hypervisors, Linux Container (in this case Docker) and unikernel](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/vms-containers-unikernels.PNG "Comparison between hypervisors, Linux Container (in this case Docker) and unikernel")
-
-*Figure 3 Comparison between hypervisors, Linux Containers (in this case Docker) and unikernels. Source docker.com, adapted with unikernel version*
-
-Figure 3 above shows the major difference between the three virtualization technologies. Here we can clearly see that virtual machines present a much larger load on the infrastructure as opposed to containers and unikernels.
-
-Additionally, unikernels are in direct “competition” with containers. By providing services in the form of reduced virtual machines, unikernels improve on the container model by its increased security. By sharing the host kernel, containerized applications share the same vulnerabilities as the host operating system. Furthermore, containers do not possess the same level of host/guest isolation as hypervisors/virtual machines, potentially making container breaches more damaging than both virtual machines and unikernels.
-
 ### Security in Unikernel
 
 As mentioned previously, unikernel services present a certain advantage in contrast to virtualized and containerized services. This is due to their reduced attack surface and reduced exploitable operating system code. When offering a service over a network, both virtual machine and container solutions are packed with more tools than required by the running application. This increases the attack surface greatly.
@@ -163,6 +145,32 @@ Figure 4 below illustrates the comparison between updating an application in a m
 *Figure 4 Updating an application in mutable and immutable infrastructures. Source: (Stella, 2016)*
 
 Immutable infrastructures come fully into effect in the case of unikernel applications. Since unikernels are designed to be developed and deployed, without the possibility to remotely connect to it, unikernels are immutable by design. Furthermore, their fast boot times allows for possibilities of seamless updates without interruption (e.g.: the [IncludeOS Liveupdate functionality](http://www.includeos.org/blog/2017/liveupdate.html)).
+
+### Virtual Machines VS Linux Containers VS Unikernel
+
+Virtualization of services can be implemented in various ways. One of the most widespread methods today is through virtual machine, hosted on hypervisors such as VMware’s ESXi or Linux Foundation’s Xen Project.
+
+Hypervisors, amongst other things, allow hosting multiple guest operating systems on a single physical machine. These guest operating systems are executed in what is called virtual machines. The widespread use of hypervisors is due to their ability to better distribute and optimize the workload on the physical servers as opposed to legacy infrastructures of one operating system per physical server.
+
+Containers are another method of virtualization, which differentiates from hypervisors by creating virtualized environments and sharing the host’s kernel. This provides a lighter approach to hypervisors which requires each guest to have their copy of the operating system kernel, making a hypervisor-virtualized environment resource heavy in contrast to containers which share parts of the existing operating system.
+
+As aforementioned, unikernels leverage the abstraction of hypervisors in addition to using library operating systems to only include the required kernel routines alongside the application to present the lightest of all three solutions.
+
+![Comparison between virtual machines, Linux Containers (in this case Docker) and unikernels](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/vms-containers-unikernels.PNG "Comparison between virtual machines, Linux Containers (in this case Docker) and unikernels")
+
+*Figure 3 Comparison between virtual machines, Linux Containers (in this case Docker) and unikernels.*
+
+Figure 3 above shows the major difference between the three virtualization technologies. Here we can clearly see that virtual machines present a much larger load on the infrastructure as opposed to containers and unikernels.
+
+Additionally, unikernels are in direct “competition” with containers. By providing services in the form of reduced virtual machines, unikernels improve on the container model by its increased security. By sharing the host kernel, containerized applications share the same vulnerabilities as the host operating system. Furthermore, containers do not possess the same level of host/guest isolation as hypervisors/virtual machines, potentially making container breaches more damaging than both virtual machines and unikernels.
+
+### Solutions Comparison
+
+| Technology | Pros | Cons |
+| --- | --- | --- | --- |
+| Virtual Machines | * Complete isolation from host<br> * Orchestration solutions  | * Requires compute power proportional to number of instances |
+| Linux Containers | * Lightweight virtualization<br> * Fast deployment times<br> * Ochestration solutions>br> * Dynamic resource allocation | * Reduced isolation between host and guest due to shared kernel |
+| Unikernels | * Lightweight images<br> * Specialized application | * Requires developing applications from the grounds up<br> * Limited deployment possibilities<br> * Lack of complete IDE support<br> * Static resource allocation<br> * Lack of orchestration tools|
 
 ## State of the Art
 
@@ -278,11 +286,11 @@ As highlighted by the table in [Comparing Solutions](https://github.com/cetic/un
 
 ### Choice of Unikernel Solution
 
-Our initial choice for deploying a proof of concept was to use Unik for its wide range of supported platform, including OpenStack. Additionally, its ability to directly integrate with the Kubernetes orchestration tool made it an ideal candidate. However early testing of the solution proved it to be non-functional when attempting to compile and execute example unikernel applications provided by the repository. Due to the lack of reactivity from the maintainers of the project regarding recent issues, including issues encountered during our initial test, we had to discard Unik as a potential candidate.
+Our initial choice for deploying a proof of concept was to use Unik for its wide range of supported platform, including OpenStack. Additionally, its ability to directly integrate with the Kubernetes orchestration tool made it an ideal candidate. However early testing of the solution proved it to be non-functional when attempting to compile and execute example unikernel applications provided by the repository. Due to the lack of reactivity from the maintainers of the project regarding recent issues, including issues encountered during our initial test, we had to discard Unik as a potential candidate (see [issue #2](https://github.com/cetic/unikernels/issues/2) on this repository as well as [issue # 152](https://github.com/solo-io/unik/issues/152) on the Unik repository).
 
 Our second choice shifted to IncludeOS for similar reasons: supported platforms including OpenStack, and its orchestration tool possibilities. One of the main drawback is that it only supports the C++ language (as opposed to Unik’s broader list of languages). While this should not prove to be an issue for our proof of concept, however it does reduce its scope of potential interested parties willing to create unikernel applications to developers proficient in C++.
 
-Another potential candidate we envisioned for this proof of concepts was MirageOS. This was mainly due to its amount of documentation and the activity present on the project’s Git repository. Unfortunately, while the OCaml language was one of its drawback, the most prominent drawback was the supported platform being limited to Xen hypervisors.
+Another potential candidate we envisioned for this proof of concepts was MirageOS. This was mainly due to its amount of documentation and the activity present on the project’s Git repository. Unfortunately, while the OCaml language was one of its drawback, the most prominent disadvantage was the supported platform being limited to Xen hypervisors.
 
 Lastly, the remaining potential candidates were OSv and Rumprun for their large selections of supported languages and, in the case of OSv, the supported platforms. However, both options were kept as last resort solutions mainly due to their technology, as they do not entirely behave as unikernels. Both employ kernels larger than needed by including functions unused by the compiled application code.
 
@@ -318,15 +326,15 @@ To build a unikernel, IncludeOS makes use of the **cmake** command to create bui
 
 The files used by the **cmake** command are very important in the construction of the IncludeOS unikernel. Following is a list of files that need to be configured accordingly in our proof of concept depending on the unikernel image to build.
 
-**CMakeLists.txt** indicates to cmake some project variables such as the project name, the files containing the C++ code to be linked with which OS libraries to form a bootable image as well as the drivers to be included in the OS. Additionally, it also imports IncludeOS routines for building the unikernel image. This file must be carefully reviewed depending on what OS devices the application needs to access and the destination hypervisor. For example, in the case of the web server, we need to access the network device, thus we need to specify the network driver, which can be “virtionet” if we use QEMU/KVM/VirtualBox or “vmxnet3” for VMware.
+[**CMakeLists.txt**](https://github.com/cetic/unikernels/blob/master/SOURCE/UNIKERNEL/WebServer/CMakeLists.txt) indicates to cmake some project variables such as the project name, the files containing the C++ code to be linked with which OS libraries to form a bootable image as well as the drivers to be included in the OS. Additionally, it also imports IncludeOS routines for building the unikernel image. This file must be carefully reviewed depending on what OS devices the application needs to access and the destination hypervisor. For example, in the case of the web server, we need to access the network device, thus we need to specify the network driver, which can be “virtionet” if we use QEMU/KVM/VirtualBox or “vmxnet3” for VMware.
 
-**Config.json** holds the configuration for the operating system such as the network device configuration, vlans, routes to implement in case of a router, terminal interfaces to include and so on. While little documentation exists on what those files can contain, IncludeOS also includes another possibility of configuring the operating system through a custom script written in what they call NaCl . These custom scripts can be used instead of the config.json file with the same syntax.
+[**Config.json**](https://github.com/cetic/unikernels/blob/master/SOURCE/UNIKERNEL/WebServer/config.json) holds the configuration for the operating system such as the network device configuration, vlans, routes to implement in case of a router, terminal interfaces to include and so on. While little documentation exists on what those files can contain, IncludeOS also includes another possibility of configuring the operating system through a custom script written in what they call NaCl. These custom scripts can be used instead of the config.json file with the same syntax (see the [firewall unikernel source code](https://github.com/cetic/unikernels/blob/master/SOURCE/UNIKERNEL/Firewall/nacl.txt)).
 
 The **dependencies.cmake** is not a required file, but it can be used to gather external dependencies such as external git repositories to clone when compiling. In one of the examples present in the IncludeOS repository, this file clones an external C++ library (developed by the same people at IncludeOS).
 
-The **vm.json** is not required either and is used mainly for QEMU parameters when using the IncludeOS boot command which executes QEMU in the background to boot on a unikernel image.
+The [**vm.json**](https://github.com/cetic/unikernels/blob/master/SOURCE/UNIKERNEL/DNS/vm.json) is not required either and is used mainly for QEMU parameters when using the IncludeOS boot command which executes QEMU in the background to boot on a unikernel image.
 
-**Service.cpp** contains the entry point to the unikernel application. This file must contain a **void Service::start() {}** method as the starting point of the application. The libraries to use in the C++ code destined for an IncludeOS unikernel should be those provided by the project. While all the code can be contained in a single file, it can be split into different files as well, however it is important to notify cmake which files to include in the CMakeLists.txt file.
+[**Service.cpp**](https://github.com/cetic/unikernels/blob/master/SOURCE/UNIKERNEL/WebServer/service.cpp) contains the entry point to the unikernel application. This file must contain a **void Service::start() {}** method as the starting point of the application. The libraries to use in the C++ code destined for an IncludeOS unikernel should be those provided by the project. While all the code can be contained in a single file, it can be split into different files as well, however it is important to notify cmake which files to include in the CMakeLists.txt file.
 
 ### Creating the Container Counterpart
 
@@ -466,7 +474,7 @@ As indicated by the graph, despite being announced as highly performant cloud re
 
 Note that at the 600 queries per second mark, the latency became too important and was pulled from the graph for readability reasons.
 
-Over the 900 queries per second mark, the data retrieved showed that the unikernel application refused to process requests beyond this throughput. Thus, the remainder of the container statistics have been excluded. As explained later in the analysis, this could be due to a bug in the UDP library implementation of the IncludeOS project.
+Over the 900 queries per second mark, the data retrieved showed that the unikernel application refused to process requests beyond this throughput. Thus, the remainder of the container statistics have been excluded. As explained later in the analysis, this could be due to a bug in the UDP library implementation of the IncludeOS project (reported to developers, see [issue #1772](https://github.com/hioa-cs/IncludeOS/issues/1772) & [issue #3](https://github.com/cetic/unikernels/issues/3)).
 
 #### Web Server
 

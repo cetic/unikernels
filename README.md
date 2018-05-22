@@ -169,9 +169,9 @@ Additionally, unikernels are in direct “competition” with containers. By pro
 
 | Technology | Pros | Cons |
 | --- | --- | --- |
-| Virtual Machines | - Complete isolation from host<br> - Orchestration solutions available | - Requires compute power proportional to number of instances |
-| Linux Containers | - Lightweight virtualization<br> - Fast deployment times<br> - Ochestration solutions<br> - Dynamic resource allocation | - Reduced isolation between host and guest due to shared kernel |
-| Unikernels | - Lightweight images<br> - Specialized application | - Requires developing applications from the grounds up<br> - Limited deployment possibilities<br> - Lack of complete IDE support<br> - Static resource allocation<br> - Lack of orchestration tools |
+| Virtual Machines | - Complete isolation from host<br> - Orchestration solutions available | - Requires compute power proportional to number of instances<br> - Requires large infrastructures<br> - Each instance loads an entire operating system |
+| Linux Containers | - Lightweight virtualization<br> - Fast boot times<br> - Ochestration solutions<br> - Dynamic resource allocation | - Reduced isolation between host and guest due to shared kernel<br> - Less flexible (i.e.: dependent on host kernel)<br> - Network is less flexible |
+| Unikernels | - Lightweight images<br> - Specialized application<br> - Complete isolation from host<br> - Higher security against absent functionalities (e.g.: command line interface exploits) | - Requires developing applications from the grounds up<br> - Limited deployment possibilities<br> - Lack of complete IDE support<br> - Static resource allocation<br> - Lack of orchestration tools |
 
 ## State of the Art
 

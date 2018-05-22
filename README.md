@@ -311,7 +311,7 @@ Both the web server and the DNS will be in a DMZ like network, with a router con
  
 *Figure 5 Logical representation of the Proof of Concept topology.*
 
-![Physical representation of the Proof of Concept topology](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/PoC%20Logical%20Topology.png "Physical representation of the Proof of Concept topology")
+![Physical representation of the Proof of Concept topology](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/PoC%20Topology%202.png "Physical representation of the Proof of Concept topology")
  
 *Figure 6 Physical representation of the Proof of Concept topology.*
 

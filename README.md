@@ -9,9 +9,10 @@
             * [Monolithic vs Microkernel](https://github.com/cetic/unikernels#monolithic-vs-microkernel)
         * [Library Operating Systems](https://github.com/cetic/unikernels#library-operating-systems)
         * [Unikernel](https://github.com/cetic/unikernels#unikernel-1)
-    * [Hypervisors VS Linux Containers VS Unikernel](https://github.com/cetic/unikernels#hypervisors-vs-linux-containers-vs-unikernel)
     * [Security in Unikernel](https://github.com/cetic/unikernels#security-in-unikernel)
     * [Immutable Infrastructures](https://github.com/cetic/unikernels#immutable-infrastructures)
+    * [Virtual Machines VS Linux Containers VS Unikernel](https://github.com/cetic/unikernels#virtual-machines-vs-linux-containers-vs-unikernel)
+    * [Solutions Comparison](https://github.com/cetic/unikernels#solutions-comparison)
 * [State of the Art](https://github.com/cetic/unikernels#state-of-the-art)
     * [Existing Projects](https://github.com/cetic/unikernels#existing-projects)
         * [MiniOS](https://github.com/cetic/unikernels#minios)
@@ -167,10 +168,10 @@ Additionally, unikernels are in direct “competition” with containers. By pro
 ### Solutions Comparison
 
 | Technology | Pros | Cons |
-| --- | --- | --- | --- |
-| Virtual Machines | * Complete isolation from host<br> * Orchestration solutions  | * Requires compute power proportional to number of instances |
+| --- | --- | --- |
+| Virtual Machines | * Complete isolation from host<br> * Orchestration solutions | * Requires compute power proportional to number of instances |
 | Linux Containers | * Lightweight virtualization<br> * Fast deployment times<br> * Ochestration solutions>br> * Dynamic resource allocation | * Reduced isolation between host and guest due to shared kernel |
-| Unikernels | * Lightweight images<br> * Specialized application | * Requires developing applications from the grounds up<br> * Limited deployment possibilities<br> * Lack of complete IDE support<br> * Static resource allocation<br> * Lack of orchestration tools|
+| Unikernels | * Lightweight images<br> * Specialized application | * Requires developing applications from the grounds up<br> * Limited deployment possibilities<br> * Lack of complete IDE support<br> * Static resource allocation<br> * Lack of orchestration tools |
 
 ## State of the Art
 

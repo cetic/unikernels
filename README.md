@@ -169,7 +169,7 @@ Additionally, unikernels are in direct “competition” with containers. By pro
 
 | Technology | Pros | Cons |
 | --- | --- | --- |
-| Virtual Machines | - Complete isolation from host<br> - Orchestration solutions | - Requires compute power proportional to number of instances |
+| Virtual Machines | - Complete isolation from host<br> - Orchestration solutions available | - Requires compute power proportional to number of instances |
 | Linux Containers | - Lightweight virtualization<br> - Fast deployment times<br> - Ochestration solutions<br> - Dynamic resource allocation | - Reduced isolation between host and guest due to shared kernel |
 | Unikernels | - Lightweight images<br> - Specialized application | - Requires developing applications from the grounds up<br> - Limited deployment possibilities<br> - Lack of complete IDE support<br> - Static resource allocation<br> - Lack of orchestration tools |
 
@@ -305,11 +305,15 @@ As such, we will create multiple unikernel in a topology as follows:
 * A router connecting the external network to the Web and DNS servers;
 * A firewall filtering the incoming packets to the router, blocking any ICMP Echo request/reply messages.
 
-Both the web server and the DNS will be in a DMZ like network, with a router connecting it to the external network and the firewall filtering incoming connections to the router. Figure 5 below represents the logical topology that will be deployed in a hypervisor environment.
+Both the web server and the DNS will be in a DMZ like network, with a router connecting it to the external network and the firewall filtering incoming connections to the router. Figure 5 and figure 6 below represent the topology that will be deployed in a hypervisor environment.
 
-![Representation of the Proof of Concept topology](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/PoC%20Topology.png "Representation of the Proof of Concept topology")
+![Logical representation of the Proof of Concept topology](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/PoC%20Topology.png "Logical representation of the Proof of Concept topology")
  
-*Figure 5 Representation of the Proof of Concept topology.*
+*Figure 5 Logical representation of the Proof of Concept topology.*
+
+![Physical representation of the Proof of Concept topology](https://raw.githubusercontent.com/cetic/unikernels/master/MEDIA/PoC%20Logical%20Topology.png "Physical representation of the Proof of Concept topology")
+ 
+*Figure 6 Physical representation of the Proof of Concept topology.*
 
 All unikernels will be executed on a Linux based machine in a QEMU/KVM hypervisor. QEMU is chosen as the hypervisor because it is the default hypervisor used by IncludeOS, but also because of the current limitations in the IncludeOS network stack drivers which causes issues when trying to execute unikernels in hypervisors like VMware Workstation or VirtualBox.
 

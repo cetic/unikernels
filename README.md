@@ -205,7 +205,7 @@ While IncludeOS is still in prototype and maintained on [GitHub](https://github.
 
 #### [MirageOS](https://mirage.io/)
 
-One of the first projects on unikernels, MirageOS is a library operating system containing various libraries used to build unikernel applications. Applications are written in OCaml, development is done using libraries that are transformed to kernel routines when compiled to a unikernel image. Images generated with MirageOS are deployable to Xen hypervisors. The project is still maintained on [GitHub](https://github.com/mirage/mirage), with version 3.0 released in February 2017.
+One of the first projects on unikernels, MirageOS is a library operating system containing various libraries used to build unikernel applications. Applications are written in OCaml, development is done using libraries that are transformed to kernel routines when compiled to a unikernel image. Images generated with MirageOS are deployable to Xen, KVM/QEMU hypervisors and RTOS/MCU. The project is still maintained on [GitHub](https://github.com/mirage/mirage), with version 3.0 released in February 2017.
 
 #### [OSv](http://osv.io/)
 
@@ -266,7 +266,7 @@ Out of the various existing projects, some standout due to their wide range of s
 | ClickOS | C++ | Xen | Network Function Virtualization |
 | HalVM | Haskell | Xen |  |
 | IncludeOS | C++ | KVM, VirtualBox, ESXi, Google Cloud, OpenStack | Orchestration tool available |
-| MirageOS | OCaml | Xen |  |
+| MirageOS | OCaml | KVM, Xen, RTOS/MCU |  |
 | OSv | Java, C, C++, Node, Ruby | VirtualBox, ESXi, KVM, Amazon EC2, Google Cloud | Cloud and IoT (ARM) |
 | Rumprun | C, C++, Erlan, Go, Java, JavaScript, Node.js, Python, Ruby, Rust | Xen, KVM |  |
 | Unik | Go, Node.js, Java, C, C++, Python, OCaml | VirtualBox, ESXi, KVM, XEN, Amazon EC2, Google Cloud, OpenStack, PhotonController | Unikernel compiler toolbox with orchestration possible through Kubernetes and Cloud Foundry |
@@ -613,6 +613,8 @@ Other unikernel projects may see the light of day, perhaps with more promising f
 - Mini-OS. (2018, February 7). Retrieved February 19, 2018, from Xen Project Wiki: https://wiki.xenproject.org/wiki/Mini-OS
 - mirage. (n.d.). Retrieved February 2018, from GitHub: https://github.com/mirage/mirage
 - MirageOS. (n.d.). Retrieved February 2018, from MirageOS: https://mirage.io/
+- MirageOS on RTOS/MCU, from MirageOS: https://mirage.io/blog/2018-esp32-booting
+- MirageOS on KVM/QEMU, from MirageOS: https://mirage.io/blog/introducing-solo5
 - osv. (n.d.). Retrieved February 2018, from GitHub: https://github.com/cloudius-systems/osv
 - OSv - the operating system designed for the cloud. (n.d.). Retrieved February 2018, from OSv: http://osv.io/
 - Overview. (n.d.). Retrieved February 2018, from ClickOS - Systems and Machine Learning: http://cnp.neclab.eu/projects/clickos/

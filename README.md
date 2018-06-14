@@ -481,6 +481,8 @@ Note that at the 600 queries per second mark, the latency became too important a
 
 Over the 900 queries per second mark, the data retrieved showed that the unikernel application refused to process requests beyond this throughput. Thus, the remainder of the container statistics have been excluded. As explained later in the analysis, this could be due to a bug in the UDP library implementation of the IncludeOS project (reported to developers, see [issue #1772](https://github.com/hioa-cs/IncludeOS/issues/1772) & [issue #3](https://github.com/cetic/unikernels/issues/3)).
 
+**NOTE: The performance issues encountered were caused by serial output being performed during execution. Supressing the output allowed higher throughput from the server as was evidenced** [**here**](https://github.com/hioa-cs/IncludeOS/issues/1772)**.**
+
 #### Web Server
 
 For the web server test, a similar stress testing was conducted. The methodology is once again to increase the number of requests per second. Starting at 100 requests per second over a 5-minute period, the number of requests is incremented by steps of 100 until the web service stops responding.

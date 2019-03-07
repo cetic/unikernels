@@ -13,7 +13,7 @@ The following sections need to be updated when adding a unikernel solution:
 Examples:
 
 * https://github.com/cetic/unikernels/commit/b67aab5265bd58bb4c19b4560a85d55925a15904
-* https://github.com/cetic/unikernels/commit/b67aab5265bd58bb4c19b4560a85d55925a15904
+* https://github.com/cetic/unikernels/commit/91bf2fda79634b0cefe7b8a2c197ecef05b87378
 
 Please send a Pull Request with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)). 
 

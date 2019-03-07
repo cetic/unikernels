@@ -20,6 +20,7 @@
         * [HalVM](https://github.com/cetic/unikernels#halvm)
         * [IncludeOS](https://github.com/cetic/unikernels#includeos)
         * [MirageOS](https://github.com/cetic/unikernels#mirageos)
+        * [Nanos Unikernel](https://github.com/cetic/unikernels#Nanos-Unikernel)
         * [OSv](https://github.com/cetic/unikernels#osv)
         * [Rumprun](https://github.com/cetic/unikernels#rumprun)
         * [Unik](https://github.com/cetic/unikernels#unik)
@@ -208,6 +209,11 @@ While IncludeOS is still in prototype and maintained on [GitHub](https://github.
 
 One of the first projects on unikernels, MirageOS is a library operating system containing various libraries used to build unikernel applications. Applications are written in OCaml, development is done using libraries that are transformed to kernel routines when compiled to a unikernel image. Images generated with MirageOS are deployable to Xen, KVM/QEMU hypervisors and RTOS/MCU. The project is still maintained on [GitHub](https://github.com/mirage/mirage), with version 3.0 released in February 2017.
 
+#### [Nanos Unikernel](https://www.nanovms.com/)
+
+Made by [NanoVMs](https://www.nanovms.com/), industry-ready unikernel provider. Unlike others that require porting, this runs any valid ELF binary. And can also run other JIT compiled languages like Python, Node, PHP etc. For now, it only runs on KVM/QEMU hypervisor, but they say that they do have plans on adding more.    
+However, this project is not open source, but it provides a compilation and orchestration tool called [Ops](http://ops.city/) which is open source and maintained on [GitHub](https://github.com/nanovms/ops)
+
 #### [OSv](http://osv.io/)
 
 OSv is particular; it allows porting various applications written in various languages to a unikernel by integrating some kernel functions built-in. Therefore, it is not as light as a fully compiled unikernel, however it provides support for many languages including Java, C, C++, Node and Ruby. It can also be run on a variety of platforms such as VirtualBox, VMWare ESXi, KVM, Amazon EC2 and Google Compute Engine. Virtual appliances with widely used applications are also directly available (Memcached, redis and Apache Cassandra).
@@ -272,6 +278,7 @@ Out of the various existing projects, some standout due to their wide range of s
 | HalVM | Haskell | Xen |  |
 | IncludeOS | C++ | KVM, VirtualBox, ESXi, Google Cloud, OpenStack | Orchestration tool available |
 | MirageOS | OCaml | KVM, Xen, RTOS/MCU |  |
+| Nanos Unikernel | C, C++, Go, Java, Node.js, Python, Rust, Ruby, PHP, etc | QEMU/KVM | Orchestration tool available |
 | OSv | Java, C, C++, Node, Ruby | VirtualBox, ESXi, KVM, Amazon EC2, Google Cloud | Cloud and IoT (ARM) |
 | Rumprun | C, C++, Erlan, Go, Java, JavaScript, Node.js, Python, Ruby, Rust | Xen, KVM |  |
 | Unik | Go, Node.js, Java, C, C++, Python, OCaml | VirtualBox, ESXi, KVM, XEN, Amazon EC2, Google Cloud, OpenStack, PhotonController | Unikernel compiler toolbox with orchestration possible through Kubernetes and Cloud Foundry |

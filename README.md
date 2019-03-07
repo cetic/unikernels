@@ -177,7 +177,9 @@ Additionally, unikernels are in direct “competition” with containers. By pro
 
 ## State of the Art
 
-This section introduces the current unikernel projects at the time of this writing (February 2018). After explaining the various projects, a comparison is established to determine the best candidate for a proof-of-concept.
+This section introduces the unikernel projects at the time of this writing (February 2018), newest unikernel solutions have also been added to the list. After explaining the various projects, a comparison is established to determine the best candidate for a proof-of-concept.
+
+**Feel free to submit a pull request to this repository to add a solution. See [the contributions guidelines](contributing.md) on how to do that**
 
 ### Existing Projects
 

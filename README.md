@@ -213,8 +213,8 @@ One of the first projects on unikernels, MirageOS is a library operating system 
 
 #### [Nanos Unikernel](https://www.nanovms.com/)
 
-Made by [NanoVMs](https://www.nanovms.com/), industry-ready unikernel provider. Unlike others that require porting, this runs any valid ELF binary. And can also run other JIT compiled languages like Python, Node, PHP etc. For now, it only runs on KVM/QEMU hypervisor, but they say that they do have plans on adding more.    
-However, this project is not open source, but it provides a compilation and orchestration tool called [Ops](http://ops.city/) which is open source and maintained on [GitHub](https://github.com/nanovms/ops)
+Made by [NanoVMs](https://www.nanovms.com/), industry-ready unikernel provider. Unlike others that require porting, this runs any valid ELF binary. And can also run other JIT compiled languages like Python, Node, PHP etc. For now, it runs on the KVM/QEMU hypervisor and Xen so supports both AWS && Google Cloud as well, but they say that they do have plans on adding more.    
+The kernel is open source and found at [Github](https://github.com/nanovms/nanos) and it provides a compilation and orchestration tool called [Ops](http://ops.city/) which is open source and maintained on [GitHub](https://github.com/nanovms/ops)
 
 #### [OSv](http://osv.io/)
 

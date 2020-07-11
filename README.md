@@ -213,7 +213,7 @@ One of the first projects on unikernels, MirageOS is a library operating system 
 
 #### [Nanos Unikernel](https://www.nanovms.com/)
 
-Made by [NanoVMs](https://www.nanovms.com/), industry-ready unikernel provider. Unlike others that require porting, this runs any valid ELF binary. And can also run other JIT compiled languages like Python, Node, PHP etc. For now, it runs on the KVM/QEMU hypervisor and Xen so supports both AWS && Google Cloud as well, but they say that they do have plans on adding more.    
+Made by [NanoVMs](https://www.nanovms.com/), industry-ready unikernel provider. Unlike others that require porting, this runs any valid ELF binary. And can also run other JIT compiled languages like Python, Node, PHP etc. For now, it runs on the KVM/QEMU hypervisor, Xen, ESX, and Hyper-V so supports both AWS && Google Cloud as well, but they say that they do have plans on adding more.    
 The kernel is open source and found at [Github](https://github.com/nanovms/nanos) and it provides a compilation and orchestration tool called [Ops](http://ops.city/) which is open source and maintained on [GitHub](https://github.com/nanovms/ops)
 
 #### [OSv](http://osv.io/)
@@ -280,7 +280,7 @@ Out of the various existing projects, some standout due to their wide range of s
 | HalVM | Haskell | Xen |  |
 | IncludeOS | C++ | KVM, VirtualBox, ESXi, Google Cloud, OpenStack | Orchestration tool available |
 | MirageOS | OCaml | KVM, Xen, RTOS/MCU |  |
-| Nanos Unikernel | C, C++, Go, Java, Node.js, Python, Rust, Ruby, PHP, etc | QEMU/KVM | Orchestration tool available |
+| Nanos Unikernel | C, C++, Go, Java, Node.js, Python, Rust, Ruby, PHP, etc | QEMU/KVM, XEN, ESXi, Amazon EC2, Google Cloud, HyperV | Orchestration tool available |
 | OSv | Java, C, C++, Node, Ruby | VirtualBox, ESXi, KVM, Amazon EC2, Google Cloud | Cloud and IoT (ARM) |
 | Rumprun | C, C++, Erlan, Go, Java, JavaScript, Node.js, Python, Ruby, Rust | Xen, KVM |  |
 | Unik | Go, Node.js, Java, C, C++, Python, OCaml | VirtualBox, ESXi, KVM, XEN, Amazon EC2, Google Cloud, OpenStack, PhotonController | Unikernel compiler toolbox with orchestration possible through Kubernetes and Cloud Foundry |

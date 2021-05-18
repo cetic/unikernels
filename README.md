@@ -30,6 +30,7 @@
         * [LING](https://github.com/cetic/unikernels#ling)
         * [Runtime.js](https://github.com/cetic/unikernels#runtimejs)
         * [ToroKernel](https://github.com/cetic/unikernels#torokernel)
+        * [Unikraft](https://github.com/cetic/unikernels#unikraft)
     * [Comparing Solutions](https://github.com/cetic/unikernels#comparing-solutions)
 * [Use Case](https://github.com/cetic/unikernels#use-case)
 * [Proof of Concept](https://github.com/cetic/unikernels#proof-of-concept)
@@ -270,6 +271,10 @@ As of October 2017, the project is no longer maintained and is not ready for pro
 
 Toro is an unikernel that proposes a dedicated API to develop microservices. The main difference with other unikernels is that Toro proposes the programmer to develop the application by relying on Toro's API. Toro is made of five FreePascal units: Processes, Memory, Filesystem, Networking, and Devices. These units provide a simple interface to the user's application. For example, Processes provides the API to handle threads whereas Filesystem provides the API to allow the accessing to files. In the case of Networking, Toro proposes two models to develop microservices: blocking and non-blocking sockets. The former is for microservices that do IO and the latter for those that they can answer requests without the need of any blocking call. Non-blocking sockets are handled by relying on the single thread event loop model in which one thread is used for each microservice. This implementation allows Toro to support many concurrent connections by reducing the number of context switches. In Toro, the kernel and the microservices are compiled together which results in an image that can be deployed in a cloud provider. For more information about the project, please see at [GitHub](https://github.com/MatiasVara/torokernel).
 
+#### [Unikraft](https://unikraft.org/)
+
+Unikraft is an automated system for building specialized POSIX-compliant OSes known as unikernels; these images are tailored to the needs of specific applications. Unikraft is based around the concept of small, modular libraries, each providing a part of the functionality commonly found in an operating system (e.g., memory allocation, scheduling, filesystem support, network stack, etc.). Unikraft is an open source project and may be found at [Github](https://github.com/unikraft/unikraft).
+
 ### Comparing Solutions
 
 Out of the various existing projects, some standout due to their wide range of supported languages. Out of the active projects, the following table resumes the language they support, the hypervisors they can run on and remarks concerning their functionality.
@@ -285,6 +290,7 @@ Out of the various existing projects, some standout due to their wide range of s
 | Rumprun | C, C++, Erlang, Go, Java, JavaScript, Node.js, Python, Ruby, Rust | Xen, KVM |  |
 | Unik | Go, Node.js, Java, C, C++, Python, OCaml | VirtualBox, ESXi, KVM, XEN, Amazon EC2, Google Cloud, OpenStack, PhotonController | Unikernel compiler toolbox with orchestration possible through Kubernetes and Cloud Foundry |
 | ToroKernel| FreePascal | VirtualBox, KVM, XEN, HyperV | Unikernel dedicated to run microservices |
+| Unikraft | C, C++, Rust, GO, Python etc. | KVM, XEN, Linux | Orchestration tool available |
 
 ## Use Case
 
